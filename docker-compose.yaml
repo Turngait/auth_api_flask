@@ -17,6 +17,8 @@ services:
       DB_NAME: ${DB_NAME}
       DB_PASS: ${DB_PASS}
       API_KEY: ${API_KEY}
+      PASS_HASH: ${PASS_HASH}
+      TOKEN_HASH: ${TOKEN_HASH}
     volumes:
       - ./api:/api
     restart: always
