@@ -1,6 +1,7 @@
 from app import db
 from datetime import datetime, timedelta
 
+
 class Session(db.Model):
   __tablename__ = 'sessions'
   id = db.Column(db.Integer, primary_key=True)

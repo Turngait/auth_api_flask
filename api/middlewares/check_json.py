@@ -8,6 +8,9 @@ class CheckJSON:
 
     def __call__(self, environ, start_response):
         request = Request(environ)
+        # Перенести проверки на метод в другое место
+        if request.method == 'GET':
+            return self.app(environ, start_response)
         if 'Content-Type' in request.headers and self.content_type == request.headers['Content-Type']:
             return self.app(environ, start_response)
 

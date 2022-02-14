@@ -46,6 +46,10 @@ def sign_up():
     # TODO перенести на слой валидации
     if 'email' not in data or 'pass' not in data or 'name' not in data:
         return jsonify(data={'is_success': False, 'msg': ['Bad request']}, status=400)
+    old_user = User.query.filter_by(email=data['email']).first()
+
+    if old_user:
+        return jsonify(data={'is_success': False, 'msg': ['Email exist in DB']}, status=403)
 
     paper = createPaper()
     password = hashPass(data['pass'], paper)
