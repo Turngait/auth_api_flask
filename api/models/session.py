@@ -11,4 +11,4 @@ class Session(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
   def __repr__(self):
-    return '<User %r>' % self.id
+    return '<Session %r>' % self.id

@@ -1,11 +1,9 @@
-import os
 from werkzeug.wrappers import Request, Response
 
-
 class CheckAPIKEY:
-    def __init__(self, app):
+    def __init__(self, app, api_key):
         self.app = app
-        self.api_key = os.environ.get("API_KEY")
+        self.api_key = api_key
 
     def __call__(self, environ, start_response):
         request = Request(environ)

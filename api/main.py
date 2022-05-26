@@ -1,5 +1,6 @@
 import routes.home
 import routes.user
+import routes.api
 from app import app
 
 

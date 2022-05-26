@@ -1,5 +1,5 @@
 # Auth API
 ## on Flask
-### v. 0.1a3
+### v. 0.1a4
 
-Шаблон АПИ авторизации на Flask.
+Template AuthAPI on Flask for my own pet-projects.

@@ -3,14 +3,12 @@ from models.session import Session
 from utils import hashPass, createPaper, createToken
 from app import db
 
-from controllers import Controller
 
-class UserController(Controller):
-    def __init__(self) -> None:
-        super().__init__()
-
+# Service with main logic
+# TODO add DTO
+class UserService:
     def sign_up(self, data) -> dict:
-        # TODO перенести на слой валидации
+        # TODO move validation to other layer
         if 'email' not in data or 'pass' not in data or 'name' not in data:
             return {'data': {'is_success': False, 'msg': ['Bad request']}, 'status': 400}
 
@@ -53,5 +51,43 @@ class UserController(Controller):
                 return {'data': {'is_success': True, 'token': token, 'msg': []}, 'status': 200}
             else:
                 return {'data': {'is_success': False, 'token': '', 'msg': ['Wrong e-mail or password']}, 'status': 403}
+        except:
+            return {'data': {'is_success': False, 'token': '', 'msg': ['DB Error']}, 'status': 500}
+
+    def change_user_name(self, data) -> dict:
+        if 'name' not in data or 'token' not in data:
+            return {'data': {'is_success': False, 'msg': ['Bad request']}, 'status': 400}
+
+        try:
+            session = Session.query.filter_by(token=data['token']).first()
+            if not session:
+                return {'data': {'is_success': False, 'token': '', 'msg': ['Wrong token or token hab been expired']}, 'status': 403}
+
+            user = User.query.filter_by(id=session.user_id).first()
+            user.name=data['name']
+            db.session.add(user)
+            db.session.commit()
+
+            return {'data': {'is_success': True, 'msg': ['Name is changed']}, 'status': 200}
+        except:
+            return {'data': {'is_success': False, 'msg': ['DB Error']}, 'status': 500}
+
+
+    def change_user_pass(self, data) -> dict:
+        if 'pass' not in data or 'token' not in data:
+            return {'data': {'is_success': False, 'msg': ['Bad request']}, 'status': 400}
+
+        try:
+            session = Session.query.filter_by(token=data['token']).first()            
+            if not session:
+                return {'data': {'is_success': False, 'token': '', 'msg': ['Wrong token or token hab been expired']}, 'status': 403}
+            
+            user = User.query.filter_by(id=session.user_id).first()
+            password = hashPass(data['pass'], user.paper)
+            user.password=password
+            db.session.add(user)
+            db.session.commit()
+
+            return {'data': {'is_success': True, 'msg': ['Password is changed']}, 'status': 200}
         except:
             return {'data': {'is_success': False, 'token': '', 'msg': ['DB Error']}, 'status': 500}
