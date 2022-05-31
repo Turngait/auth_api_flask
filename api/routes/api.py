@@ -2,6 +2,7 @@ from app import app
 from flask import request, jsonify
 from services.ApiService import ApiService
 
+
 @app.route('/api', methods=['POST'])
 def add_new_api_key():
   print(request.headers['API_KEY'])

@@ -3,6 +3,8 @@ import hashlib
 from app import db
 from models.api import Api
 from config.config import MASTER_API_KEY
+
+
 class ApiService:
   def __init__(self, ip, master_key) -> None:
     self.ip = ip
