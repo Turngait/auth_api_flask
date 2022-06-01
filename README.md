@@ -1,6 +1,6 @@
 # Auth API
 ## powered by Flask
-### v. 0.1a4
+### v. 0.1a5
 
 Template AuthAPI on Flask for my own pet-projects.
 
@@ -27,5 +27,8 @@ docker-compose up
 <br/>
 
 ## **Releases**
+### June 01 - 0.1a5
+Complete "check api key" flow.
+
 ### May 31 - 0.1a4
 Add create api key function.
