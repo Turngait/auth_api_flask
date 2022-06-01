@@ -91,3 +91,27 @@ class UserService:
             return {'data': {'is_success': True, 'msg': ['Password is changed']}, 'status': 200}
         except:
             return {'data': {'is_success': False, 'token': '', 'msg': ['DB Error']}, 'status': 500}
+
+    
+    def get_public_info(self, token):
+        try:
+            session = Session.query.filter_by(token=token).first()
+            if not session:
+                return {'data': {'is_success': False, 'token': '', 'msg': ['Wrong token or token hab been expired']}, 'status': 403}
+
+            user = User.query.filter_by(id=session.user_id).first()
+            if not user:
+                return {'data': {'is_success': False, 'token': '', 'msg': ['User does not exist']}, 'status': 403}
+            
+            public_data = {
+                'user_id': user.id,
+                'name': user.name,
+                'email': user.email,
+                'created_at': user.created_at,
+                'session_expired_at': session.expired_at
+            }
+
+            return {'data': {'is_success': True, 'token': token, 'msg': [], 'public_data': public_data}, 'status': 200}
+
+        except:
+            return {'data': {'is_success': False, 'token': '', 'msg': ['DB Error']}, 'status': 500}
