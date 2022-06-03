@@ -1,7 +1,5 @@
 from app import app, db
 from flask import request, jsonify
-from models.session import Session
-from models.user import User
 from services.UserService import UserService
 from middlewares.check_api_key import check_api_key
 
