@@ -13,6 +13,5 @@ class CheckJSON:
             return self.app(environ, start_response)
         if 'Content-Type' in request.headers and self.content_type == request.headers['Content-Type']:
             return self.app(environ, start_response)
-
         res = Response(u'Accept only JSON', mimetype='text/plain', status=406)
         return res(environ, start_response)

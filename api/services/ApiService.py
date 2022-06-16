@@ -2,6 +2,7 @@ from datetime import datetime
 import hashlib
 from app import db
 from models.api import Api
+from logger.logger import Logger
 from config.config import MASTER_API_KEY
 
 
@@ -36,6 +37,8 @@ class ApiService:
   def get_api_key(self):
     try:
       api = Api.query.filter_by(ip=self.ip).first()
+      logger = Logger(f"Get api key for {self.ip}")
+      logger.log()
       if not api:
         return {"status": 403, "data": {"api_key": None, "msg": ["Cant find key by this ip"], "ip": self.ip}}
 
