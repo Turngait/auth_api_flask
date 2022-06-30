@@ -34,6 +34,7 @@ def sign_in():
     data = request.get_json()
     controller = UserService()
     response = controller.sign_in(data)
+    
     return jsonify(data=response['data'], status=response['status'])
 
 
@@ -44,5 +45,6 @@ def sign_up():
 
     data = request.get_json()
     controller = UserService()
-    response = controller.sign_up(data)    
+    response = controller.sign_up(data) 
+    
     return jsonify(data=response['data'], status=response['status'])

@@ -6,6 +6,7 @@ from logger.logger import Logger
 from config.config import MASTER_API_KEY
 
 
+# Service which work with api keys and check authorization to this API
 class ApiService:
   def __init__(self, ip, outer_key) -> None:
     self.ip = ip
@@ -29,6 +30,9 @@ class ApiService:
     try:
       db.session.add(api)
       db.session.commit()
+
+      logger = Logger(f"New api key for {self.ip} was added")
+      logger.log()
       return {"status": 200, "data": {"api_key": api_key, "ip": self.ip}}
     except:
       return {"status": 500, "data": {"api_key": None, "ip": self.ip}}
@@ -37,11 +41,12 @@ class ApiService:
   def get_api_key(self):
     try:
       api = Api.query.filter_by(ip=self.ip).first()
-      logger = Logger(f"Get api key for {self.ip}")
-      logger.log()
+
       if not api:
         return {"status": 403, "data": {"api_key": None, "msg": ["Cant find key by this ip"], "ip": self.ip}}
-
+      
+      logger = Logger(f"Get api key for {self.ip}")
+      logger.log()
       return {"status": 200, "data": {"api_key": api.key, "ip": self.ip}}
     except:
       return {"status": 500, "data": {"api_key": None, "ip": self.ip}}
@@ -55,8 +60,14 @@ class ApiService:
       db.session.add(api)
       db.session.commit()
 
+      logger = Logger(f"Api key was changed for {self.ip}")
+      logger.log()
+
       return {'data': {'is_success': True, 'msg': ['Api key is changed'], "ip": self.ip, "api_key": api_key}, 'status': 200}
     except:
+      logger = Logger(f"Exception {self.ip}")
+      logger.log()
+      
       return {"status": 500, "data": {"api_key": None, "ip": self.ip}}
 
 
@@ -66,8 +77,14 @@ class ApiService:
       db.session.delete(api)
       db.session.commit()
 
+      logger = Logger(f"Api key was deleted for {self.ip}")
+      logger.log()
+
       return {'data': {'is_success': True, 'msg': ['Row was deleted'], "ip": self.ip, "api_key": None}, 'status': 200}
     except:
+      logger = Logger(f"Exception {self.ip}")
+      logger.log()
+      
       return {"status": 500, "data": {"api_key": None, "ip": self.ip}}
 
 

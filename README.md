@@ -1,6 +1,6 @@
 # Auth API
 ## powered by Flask
-### v. 0.2a0
+### v. 0.3a0
 
 Template AuthAPI on Flask for my own pet-projects.
 
@@ -27,6 +27,9 @@ docker-compose up
 <br/>
 
 ## **Releases**
+### June 30 - 0.3a0
+Add logger.
+
 ### June 03 - 0.2a1
 Change Dokerfile image.
 ### June 01 - 0.2a0
