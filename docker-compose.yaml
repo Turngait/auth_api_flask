@@ -2,12 +2,13 @@ version: '3.1'
 
 services:
 
-#   web:
-#     image: nginx
-#     container_name: auth-nginx
-#     restart: always
-#     ports:
-#       - 8080:80
+  # nginx:
+  #   build: ./nginx
+  #   ports:
+  #     - 1337:80
+  #   depends_on:
+  #     - api
+
   api:
     build: .
     ports:
@@ -23,6 +24,8 @@ services:
       - ./api:/api
     restart: always
     container_name: auth_api
+    env_file:
+      - ./.env
     links:
       - db
 

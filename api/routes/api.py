@@ -12,16 +12,19 @@ def add_new_api_key():
   data_from_req = request.get_json()
   api_service = ApiService(data_from_req['ip'], request.headers['API_KEY'])
   data = api_service.add_new_api_key()
+
   return jsonify(data=data, status=data["status"])
 
 
 @app.route('/api/<ip>', methods=['GET'])
 def get_api_key(ip):
+  # TODO Move check key logic to middleware layer
   if not request.headers['API_KEY'] == MASTER_API_KEY:
       return jsonify(data={"msg": "Wrong api key"}, status=403)
 
   api_service = ApiService(ip, request.headers['API_KEY'])
   data = api_service.get_api_key()
+
   return jsonify(data=data, status=data["status"])
 
 
@@ -33,6 +36,7 @@ def change_api_key():
   data_from_req = request.get_json()
   api_service = ApiService(data_from_req['ip'], request.headers['API_KEY'])
   data = api_service.change_api_key()
+
   return jsonify(data=data, status=data["status"])
 
 
@@ -44,4 +48,5 @@ def delete_api_key():
   data_from_req = request.get_json()
   api_service = ApiService(data_from_req['ip'], request.headers['API_KEY'])
   data = api_service.delete_aip_key()
+
   return jsonify(data=data, status=data["status"])

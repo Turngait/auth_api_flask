@@ -2,6 +2,7 @@ from models.user import User
 from models.session import Session
 from utils import hashPass, createPaper, createToken
 from app import db
+from logger.logger import Logger
 
 
 # Service with main logic
@@ -28,6 +29,9 @@ class UserService:
             db.session.add(session)
             db.session.commit()
 
+            logger = Logger(f"Sign up new user - {data['email']}")
+            logger.log()
+
             return {'data': {'is_success': True, 'token': token, 'msg': ['SignUp success']}, 'status': 200}
         except:
             return {'data': {'is_success': False, 'token': '', 'msg': ['DB Error']}, 'status': 500}
@@ -48,8 +52,15 @@ class UserService:
                 session = Session(user_id=user.id, token=token)
                 db.session.add(session)
                 db.session.commit()
+
+                logger = Logger(f"Sign in new user - {data['email']}")
+                logger.log()
+
                 return {'data': {'is_success': True, 'token': token, 'msg': []}, 'status': 200}
             else:
+                logger = Logger(f"Sign in new user is false- {data['email']} - {data['pass']}")
+                logger.log()
+
                 return {'data': {'is_success': False, 'token': '', 'msg': ['Wrong e-mail or password']}, 'status': 403}
         except:
             return {'data': {'is_success': False, 'token': '', 'msg': ['DB Error']}, 'status': 500}
@@ -87,6 +98,9 @@ class UserService:
             user.password=password
             db.session.add(user)
             db.session.commit()
+
+            logger = Logger(f"Change user pass for - {user.id}")
+            logger.log()
 
             return {'data': {'is_success': True, 'msg': ['Password is changed']}, 'status': 200}
         except:
