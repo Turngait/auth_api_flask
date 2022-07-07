@@ -1,6 +1,6 @@
 # Auth API
 ## powered by Flask
-### v. 0.3a0
+### v. 0.1b0
 
 Template AuthAPI on Flask for my own pet-projects.
 
@@ -15,18 +15,24 @@ docker-compose
 ```
 git clone https://github.com/Turngait/auth_api_flask.git auth_api
 cd auth_api
-cp .env.example .env
+make init
 ```
-Fill all fields in .env .
+or you can do it manually
+```
+cp .env.example .env
+docker-compose build
+```
+Then fill all fields in .env .
 
 ```
-docker-compose build
 docker-compose up
 ```
 
 <br/>
 
 ## **Releases**
+### July 05 - 0.1b0
+Betta version release ready.
 ### June 30 - 0.3a0
 Add logger.
 
