@@ -20,7 +20,8 @@ def init():
         resp = Response('DB created')
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
-    except:
+    except Exception as inst:
+        print(inst)
         resp = Response('Server error')
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
